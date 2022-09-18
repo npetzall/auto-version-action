@@ -1,0 +1,24 @@
+name: 'Auto-version-action'
+description: 'Auto version as an action inspired by shipkit-auto-version'
+inputs:
+  github-token:
+    description: 'Token to access github'
+    required: true
+  version-spec:
+    description: 'Version spec or key/value file for version spec'
+    required: false
+    default: 'version.properties'
+  tag-prefix:
+    description: 'Prefix used for version tags'
+    require: false
+    default: "v"
+outputs:
+  last-tagged-version:
+    description: 'Version that the current version is based of'
+  version-spec:
+    description: 'Version specification used'
+  current-version:
+    description: 'Calculated version base of last_tagged_version'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

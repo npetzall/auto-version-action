@@ -1,0 +1,22 @@
+name: "Dogfooding"
+
+on: [push]
+
+jobs:
+  auto-version:
+    name: auto-version
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest, ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name:
+        uses: ./
+        id: auto-version
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print details from auto-version-action
+        run: echo "${{ steps.auto-version.outputs.last-tagged-version }}"
