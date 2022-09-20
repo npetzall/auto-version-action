@@ -29,5 +29,5 @@ jobs:
         if: ${{ runner.os == 'Linux' }}
       - name: Print exported env
         run: |
-          $env:AUTO_VERSION
+          Write-Host "AUTO-VERSION: ${env:AUTO_VERSION}"
         if: ${{ runner.os == 'Windows' }}
