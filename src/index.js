@@ -4,8 +4,8 @@ const git = require('./git');
 
 async function run() {
   try {
-    const tag_prefix = core.getInput('tag_prefix');
-    const gh_token = core.getInput('github_token');
+    const tag_prefix = core.getInput('tag-prefix');
+    const gh_token = core.getInput('github-token');
 
     const octokit = github.getOctokit(gh_token);
 
