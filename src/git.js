@@ -11,16 +11,16 @@ const lastVersionByTag = async (github, tag_prefix) => {
     });
 }
 
-const numberOfBumps = async (github, version) => {
+const numberOfBumps = async (github, sha) => {
     const options = {
         owner: context.repo.owner,
         repo: context.repo.repo,
     }
-    if (version.sha.trim()) {
-        options.sha = version.sha;
+    if (sha && sha.trim().length > 0) {
+        options.sha = sha.trim();
     }
     return github
-      .paginate(github.rest.repos.listTags, options)
+      .paginate(github.rest.repos.listCommits, options)
       .then(commits => {
           let commitCount = 0;
           let mergeCount = 0;

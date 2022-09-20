@@ -67,6 +67,210 @@ describe("git", () => {
       expect(version.sha).toBe("3c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc")
     })
   });
+  describe("numberOfBumps", () => {
+    test("5 commits", async () => {
+      const github = {
+        sha: "",
+        paginate() {
+          this.sha = arguments[1].sha;
+          return new Promise((resolve) => {
+            resolve([
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              }
+              ])
+          });
+        },
+        rest: {
+          repos: {
+            listCommits: {}
+          }
+        }
+      }
+      const bumps = await git.numberOfBumps(github, "abc");
+      expect(github.sha).toBe("abc")
+      expect(bumps).toBe(5);
+    })
+    test("2 merges(2+2 commits) and 1 commit", async () => {
+      const github = {
+        sha: "",
+        paginate() {
+          this.sha = arguments[1].sha;
+          return new Promise((resolve) => {
+            resolve([
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                },{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                },{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+              {
+                "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                "commit": {
+                  "tree": {
+                    "url": "https://api.github.com/repos/octocat/Hello-World/tree/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                    "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                  },
+                },
+                "parents": [{
+                  "url": "https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                  "sha": "6dcb09b5b57875f334f61aebed695e2e4193db5e"
+                }]
+              },
+            ])
+          });
+        },
+        rest: {
+          repos: {
+            listCommits: {}
+          }
+        }
+      }
+      const bumps = await git.numberOfBumps(github, "");
+      expect(github.sha).toBeUndefined();
+      expect(bumps).toBe(3);
+    })
+  })
 });
 
 

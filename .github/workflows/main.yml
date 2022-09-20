@@ -13,10 +13,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name:
+      - name: Run auto version
         uses: ./
         id: auto-version
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Print details from auto-version-action
-        run: echo "${{ steps.auto-version.outputs.last-tagged-version }}"
+        run: |
+          echo "last-tagged-version: ${{ steps.auto-version.outputs.last-tagged-version }}"
+          echo "version-spec: ${{ steps.auto-version.outputs.version-spec }}"
+          echo "current-version: ${{ steps.auto-version.outputs.current-version }}"
+      - name: Print exported env
+        run: |
+          echo "AUTO_VERSION: $AUTO_VERSION"
+        if: ${{ runner.os == 'Linux' }}
+      - name: Print exported env
+        run: |
+          echo "AUTO_VERSION: %AUTO_VERSION%"
+        if: ${{ runner.os == 'Windows' }}
