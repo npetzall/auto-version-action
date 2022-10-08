@@ -7,9 +7,9 @@ const fromTag = (tag, tag_prefix) => {
     sha: tag.commit.sha,
     asString() {
       return [this.major, this.minor, this.patch].join(".");
-    }
-  }
-}
+    },
+  };
+};
 
 const highest = (versionA, versionB) => {
   if (versionA.major > versionB.major) {
@@ -31,7 +31,7 @@ const highest = (versionA, versionB) => {
     return versionB;
   }
   return versionA;
-}
+};
 
 exports.fromTag = fromTag;
 exports.highest = highest;
