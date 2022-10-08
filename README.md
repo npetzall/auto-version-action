@@ -23,17 +23,29 @@ Used so that versions can be extracted from tags.
 
 ## Outputs
 
-## `last-tagged-version`
+## `latest-tagged-version`
 
-Previous version based of the tag with the highest version number
+Previous version based of the tag with the highest version number  
+Also exported as env `PREV_VERSION`
+
+## `latest-tagged-version-name`
+
+Tag name for the latest-tagged-version  
+Also exported as env `PREV_VERSION_NAME`
+
+## `latest-tagged-version-sha`
+
+Commit hash for the latest-tagged-version  
+Also exported as env `PREV_VERSION_SHA`
 
 ## `version-spec`
 
 Version specification used
 
-## `current-version`
+## `auto-version`
 
-Version for this build
+Version for this build  
+Also exported as env `AUTO-VERSION`
 
 ## Example usage
 

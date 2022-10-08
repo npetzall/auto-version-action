@@ -13,11 +13,15 @@ inputs:
     require: false
     default: "v"
 outputs:
-  last-tagged-version:
+  latest-tagged-version:
     description: 'Version that the current version is based of'
+  latest-tagged-version-name:
+    description: 'Tag name'
+  latest-tagged-version-sha:
+    description: 'Commit hash associated with tag'
   version-spec:
     description: 'Version specification used'
-  current-version:
+  auto-version:
     description: 'Calculated version base of last_tagged_version'
 runs:
   using: 'node16'

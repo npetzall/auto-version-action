@@ -8,16 +8,21 @@ async function run() {
     const version_spec = await versionSpec(core.getInput("version-spec"));
 
     const octokit = github.getOctokit(core.getInput("github-token"));
-    const last_tagged_version = await git.lastVersionByTag(
+    const latest_tagged_version = await git.lastVersionByTag(
       octokit,
       core.getInput("tag-prefix")
     );
-    const bumps = await git.numberOfBumps(octokit, last_tagged_version.sha);
-    const current_version = version_spec.version(last_tagged_version, bumps);
+    const bumps = await git.numberOfBumps(octokit, latest_tagged_version.sha);
+    const current_version = version_spec.version(latest_tagged_version, bumps);
 
-    core.setOutput("last-tagged-version", last_tagged_version.asString());
+    core.setOutput("latest-tagged-version", latest_tagged_version.asString());
+    core.setOutput("latest-tagged-version-name", latest_tagged_version.name);
+    core.setOutput("latest-tagged-version-sha", latest_tagged_version.sha);
     core.setOutput("version-spec", version_spec.asString());
-    core.setOutput("current-version", current_version);
+    core.setOutput("auto-version", current_version);
+    core.exportVariable("PREV_VERSION", latest_tagged_version.asString());
+    core.exportVariable("PREV_VERSION_NAME", latest_tagged_version.name);
+    core.exportVariable("PREV_VERSION_SHA", latest_tagged_version.sha);
     core.exportVariable("AUTO_VERSION", current_version);
   } catch (error) {
     core.setFailed(error.message);

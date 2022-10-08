@@ -8,6 +8,7 @@ describe("version", () => {
       expect(version.minor).toBe(0);
       expect(version.patch).toBe(1);
       expect(version.sha).toBe("abc123");
+      expect(version.name).toBe("1.0.1");
     });
     test("with prefix", async () => {
       const version = fromTag(
@@ -18,6 +19,7 @@ describe("version", () => {
       expect(version.minor).toBe(0);
       expect(version.patch).toBe(1);
       expect(version.sha).toBe("abc123");
+      expect(version.name).toBe("v.1.0.1");
     });
   });
   describe("comparison", () => {
