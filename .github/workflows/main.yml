@@ -11,6 +11,18 @@ on:
       - '*.md'
 
 jobs:
+  lint-format:
+    name: Check lint and format
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ] #windows-latest,
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - run: npm run lint
+      - run: npm run format:check
+
 
   unit-test:
     name: Unit test
