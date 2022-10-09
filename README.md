@@ -1,3 +1,7 @@
+[![Testing](https://github.com/npetzall/auto-version-action/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/npetzall/auto-version-action/actions/workflows/main.yml)
+[![CodeQL](https://github.com/npetzall/auto-version-action/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/npetzall/auto-version-action/actions/workflows/codeql-analysis.yml)
+[![Check dist/](https://github.com/npetzall/auto-version-action/actions/workflows/check-dist.yml/badge.svg?branch=main)](https://github.com/npetzall/auto-version-action/actions/workflows/check-dist.yml)
+
 # Auto Version Action
 
 Idea is to provide a calculated version to a run like [shipkit-auto-version](https://github.com/shipkit/shipkit-auto-version)
