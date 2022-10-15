@@ -12,27 +12,4 @@ const fromTag = (tag, tag_prefix) => {
   };
 };
 
-const highest = (versionA, versionB) => {
-  if (versionA.major > versionB.major) {
-    return versionA;
-  }
-  if (versionA.major < versionB.major) {
-    return versionB;
-  }
-  if (versionA.minor > versionB.minor) {
-    return versionA;
-  }
-  if (versionA.minor < versionB.minor) {
-    return versionB;
-  }
-  if (versionA.patch > versionB.patch) {
-    return versionA;
-  }
-  if (versionA.patch < versionB.patch) {
-    return versionB;
-  }
-  return versionA;
-};
-
 exports.fromTag = fromTag;
-exports.highest = highest;
