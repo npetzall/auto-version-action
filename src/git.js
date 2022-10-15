@@ -1,18 +1,27 @@
 const { context } = require("@actions/github");
-const { fromTag, highest } = require("./version");
+const { fromTag } = require("./version");
 
-const lastVersionByTag = async (github, tag_prefix) => {
-  return github
-    .paginate(github.rest.repos.listTags, {
+const latestRelease = async (github, tag_prefix) => {
+  return github.rest.repos
+    .getLatestRelease({
       owner: context.repo.owner,
       repo: context.repo.repo,
     })
-    .then((tags) => {
-      const versions = tags.map((tag) => fromTag(tag, tag_prefix));
-      return versions.reduce(
-        highest,
-        fromTag({ name: "0.0.0", commit: { sha: "" } })
-      );
+    .catch(() => {
+      return { status: 404 };
+    })
+    .then((response) => {
+      if (response.status === 404) {
+        return fromTag({ name: "0.0.0", commit: { sha: "" } });
+      } else {
+        return fromTag(
+          {
+            name: response.data.tag_name,
+            commit: { sha: response.data.target_commitish },
+          },
+          tag_prefix
+        );
+      }
     });
 };
 
@@ -21,11 +30,18 @@ const numberOfBumps = async (github, sha) => {
     owner: context.repo.owner,
     repo: context.repo.repo,
   };
-  if (sha && sha.trim().length > 0) {
-    options.sha = sha.trim();
-  }
   return github
-    .paginate(github.rest.repos.listCommits, options)
+    .paginate(github.rest.repos.listCommits, options, (response, done) => {
+      const commits = [];
+      for (const commit of response.data) {
+        if (commit.sha === sha) {
+          done();
+          break;
+        }
+        commits.push(commit);
+      }
+      return commits;
+    })
     .then((commits) => {
       let commitCount = 0;
       let mergeCount = 0;
@@ -43,5 +59,5 @@ const numberOfBumps = async (github, sha) => {
     });
 };
 
-exports.lastVersionByTag = lastVersionByTag;
+exports.latestRelease = latestRelease;
 exports.numberOfBumps = numberOfBumps;
