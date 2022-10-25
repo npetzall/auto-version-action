@@ -58,3 +58,31 @@ uses: npetzall/auto-version-action@[sha]
 with:
   github-token: ${{ secrets.GITHUB_TOKEN }}
 ```
+```yaml
+- name: Auto-version
+  id: id: auto-version
+  uses: npetzall/auto-version-action@[sha]
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+- name: Print details from auto-version-action
+  run: |
+    echo "latest-tagged-version: ${{ steps.auto-version.outputs.latest-tagged-version }}"
+    echo "latest-tagged-version-name: ${{ steps.auto-version.outputs.latest-tagged-version-name }}"
+    echo "latest-tagged-version-sha: ${{ steps.auto-version.outputs.latest-tagged-version-sha }}"
+    echo "version-spec: ${{ steps.auto-version.outputs.version-spec }}"
+    echo "auto-version: ${{ steps.auto-version.outputs.auto-version }}"
+- name: Print exported env
+  run: |
+    echo "PREV_VERSION: $PREV_VERSION"
+    echo "PREV_VERSION_NAME: $PREV_VERSION_NAME"
+    echo "PREV_VERSION_SHA: $PREV_VERSION_SHA"
+    echo "AUTO_VERSION: $AUTO_VERSION"
+  if: ${{ runner.os == 'Linux' }}
+- name: Print exported env
+  run: |
+    Write-Host "PREV_VERSION: ${env:PREV_VERSION}"
+    Write-Host "PREV-VERSION_NAME: ${env:PREV_VERSION_NAME}"
+    Write-Host "PREV-VERSION_SHA: ${env:PREV_VERSION:SHA}"
+    Write-Host "AUTO-VERSION: ${env:AUTO_VERSION}"
+  if: ${{ runner.os == 'Windows' }}
+```
