@@ -60,7 +60,7 @@ with:
 ```
 ```yaml
 - name: Auto-version
-  id: id: auto-version
+  id: auto-version
   uses: npetzall/auto-version-action@[sha]
   with:
     github-token: ${{ secrets.GITHUB_TOKEN }}
