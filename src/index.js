@@ -14,7 +14,7 @@ async function run() {
     const bumps = await git.numberOfBumps(octokit, latest_release.sha);
     const current_version = version_spec.version(latest_release, bumps);
     core.info(
-      latest_release.asString +
+      latest_release.asString() +
         ", " +
         version_spec.asString() +
         ", " +
