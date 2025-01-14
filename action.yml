@@ -11,7 +11,7 @@ inputs:
   tag-prefix:
     description: 'Prefix used for version tags'
     require: false
-    default: "v"
+    default: 'v'
 outputs:
   latest-tagged-version:
     description: 'Version that the current version is based of'
